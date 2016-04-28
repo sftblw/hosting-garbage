@@ -9,12 +9,12 @@ ID : @<input type="text" placeholder="ID를 적으세요">
 4. [ ] 존잘님
 5. [ ] 약간 거리가 있지만 예의를 가지고 소통 (♡)
 6. [ ] 언팔해야 하는데 못 하고 있음
-7. <span style="color:#ccc;">(원래 이 번호는 [@sftblw](https://twitter.com/sftblw)님 스스로에 대한 내용입니다)</span>
+7. <span style="color:#ccc;">(원래 이 번호는 [<span style="color:#ccc;">@sftblw</span>](https://twitter.com/sftblw)님 스스로에 대한 내용입니다)</span>
 8. [ ] 실친
 9. [ ] 성격이 (여러 의미에서) 특이함 (나쁜 사람은 아님)
 10. [ ] 좋은 사람인데 취미가 안 맞거나 해서 소통이 거의 없음
 
 [<span style="color:#ccc;">\[나도 할래요:
 goo.gl/BTpyQH \]</span>](
-goo.gl/BTpyQH)<br/>
-[<span style="color:#ccc;">\[수정요청버튼\]</span>](https://github.com/sftblw/hosting-garbage)
+https://goo.gl/BTpyQH)<br/>
+[<span style="color:#ccc;">\[github에서 수정요청\]</span>](https://github.com/sftblw/hosting-garbage)
