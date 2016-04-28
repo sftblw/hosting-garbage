@@ -1,4 +1,4 @@
-# 타임라인 체크리스트
+# 타임라인 팔로잉 체크리스트
 
 닉네임 : <input type="text" placeholder="닉네임을 적으세요"><br/>
 ID : @<input type="text" placeholder="ID를 적으세요">
@@ -13,3 +13,5 @@ ID : @<input type="text" placeholder="ID를 적으세요">
 8. [ ] 실친
 9. [ ] 성격이 (여러 의미에서) 특이함 (나쁜 사람은 아님)
 10. [ ] 좋은 사람인데 취미가 안 맞거나 해서 소통이 거의 없음
+
+[<span style="color:#ccc;">\[수정요청버튼\]</span>](https://github.com/sftblw/hosting-garbage)
