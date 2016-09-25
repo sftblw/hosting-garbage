@@ -24,7 +24,7 @@
   <body>
     <h1>몇 번 단챠를 해야 원하는 SSR 아이돌을 뽑을 수 있을까?</h1>
     <p>1번 단챠가 a% 확률일 때, <b>몇 번 뽑아야</b> 최종적으로 d% 이상으로 나올지 계산합니다. <a href="https://twitter.com/sftblw/status/774224154417516544">해설트윗</a></p>
-    <p>기본값은 2016.9.26 기준이고, 최종 계산에 쓰이는 확률은 개별 아이돌별 출현확률을 고려하지 않고 단순하게 나눕니다.</p>
+    <p>기본값 및 금액 계산은 2016.9.26 기준이고, 최종 계산에 쓰이는 확률은 개별 아이돌별 출현확률을 고려하지 않고 단순하게 나눕니다.</p>
     <p>SSR의 총 갯수를 고려하지 않으려면 SSR 총 갯수를 1로 두세요.</p>
     <p>참고로만 사용하세요.</p>
     <div class="input_area">
@@ -35,6 +35,7 @@
     <p><ul>
       <li>1번 단챠가 <span class="one_ratio render">?</span>% 일 때, 이를 SSR 아이돌의 총 수 <span class="ssr_count render">?</span>명으로 나누면 한 번 만에 원하는 아이돌이 나올 확률은 약 <span class="one_ratio_final render">?</span>% 입니다.</li>
       <li>최종적으로 <span class="object_ratio render">?</span>% 이상으로 특정 SSR을 뽑으려면, 최소 단챠 <span class="result_count render">?</span>번을 해야합니다.</li>
+      <li>10연챠 (2500 쥬얼)만 한다고 가정하면 최소 쥬얼 <span class="jewel render">?</span>개가 들어가고, 이는 최소한의 금액을 사용한다고 했을 때 <span class="money render">?</span>¥ 입니다. 대략 1엔을 10.9원으로 치면, 이는 <span class="money_krw render">?</span>￦ 입니다.</li>
     </ul></p>
 
     <p>이 계산에 사용되는 JavaScript 함수는 아래와 같으며, 각종 예외처리는 되어있지 않습니다.</p>
@@ -99,6 +100,10 @@
       var render_object_ratio = document.querySelector('span.object_ratio.render');
       var render_result_count = document.querySelector('span.result_count.render');
 
+      var render_jewel = document.querySelector('span.jewel.render');
+      var render_money = document.querySelector('span.money.render');
+      var render_money_krw = document.querySelector('span.money_krw.render');
+
       function render() {
         // calculate
         var one_ratio_final_value = one_ratio.value / ssr_count.value;
@@ -114,10 +119,42 @@
 
         render_object_ratio.innerHTML = object_ratio_number.value;
         render_result_count.innerHTML = result_count;
+
+        // yen calculation
+        var jewel_yen = [ // const
+          // jewel → yen
+          [8400, 9800],
+          [4200, 5000],
+          [2650, 3200],
+          [1300, 1600],
+          [760, 960],
+          [360, 480],
+          [60, 120]
+        ];
+
+        var jewel = Math.ceil(result_count / 10) * 2500;
+        var money = 0;
+
+        var jewel_remain = jewel;
+        while (jewel_remain > 0) {
+          for (var i = 0; i < jewel_yen.length; i++) {
+            if (jewel_remain > jewel_yen[i][0]) {
+              jewel_remain -= jewel_yen[i][0];
+              money += jewel_yen[i][1];
+            } else {
+              jewel_remain -= jewel_yen[jewel_yen.length - 1][0];
+              money += jewel_yen[jewel_yen.length - 1][1];
+            }
+          }
+        }
+        // number comma regex http://stackoverflow.com/questions/2254185/regular-expression-for-formatting-numbers-in-javascript
+        render_jewel.innerHTML = String(jewel).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+        render_money.innerHTML = String(money).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+        render_money_krw.innerHTML = String(Math.ceil(money * 10.9)).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
       }
-      render();
-      // http://www.2ality.com/2013/06/triggering-events.html
+      // event trigger by js http://www.2ality.com/2013/06/triggering-events.html
       ssr_count.dispatchEvent(new Event('change'));
+      render();
     });
   </script>
 </html>
