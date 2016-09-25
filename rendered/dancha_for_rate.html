@@ -141,10 +141,12 @@
             if (jewel_remain > jewel_yen[i][0]) {
               jewel_remain -= jewel_yen[i][0];
               money += jewel_yen[i][1];
-            } else {
-              jewel_remain -= jewel_yen[jewel_yen.length - 1][0];
-              money += jewel_yen[jewel_yen.length - 1][1];
+              break;
             }
+          }
+          if (jewel_remain <= jewel_yen[jewel_yen.length - 1][0]) {
+            jewel_remain -= jewel_yen[jewel_yen.length - 1][0];
+            money += jewel_yen[jewel_yen.length - 1][1];
           }
         }
         // number comma regex http://stackoverflow.com/questions/2254185/regular-expression-for-formatting-numbers-in-javascript
