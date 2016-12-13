@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<style>
+    * {margin: 0; padding: 0;}
+    body {width: 100%}
+    div.col { max-width: 50%; padding: 2%; margin: 3%; display: inline-block; box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);}
+    div.container {text-align: center; max-width: 1024px; margin: 0 auto;}
+    h1, h2, h3, h4, h5, h6 { margin-bottom: .5em; margin-top: .5em;}
+    textarea {margin-top: .5em; margin-bottom: .5em;}
+</style>
+</head>
+<html>
+<body>
+    <div class="container">
+        <div class="col">
+            <h1>정보</h1>
+            <p>모 게임의 암호를 해독하기 위해 급하게 짠 암호 해독기입니다.</p>
+            <p>알파벳 하나 - 한글 여러글자 형식이며, 암호표에는 한 줄에 하나씩 공백으로 구분해서 넣으세요. 예제는 기본값을 참조하세요.
+            <p>알파벳 소문자에 대한 고려는 안 하고 짰는데 소문자도 암호화 대상으로 사용할 수 있긴 할 겁니다.</p>
+        </div>
+        <div class="col">
+        <h2>암호표</h2>
+            <p id="warn"></p>
+            <textarea id="secret">
+A 슬 픔 의
+B 계 곡 에 서
+C 그 대 를
+D 맞 이 하 는
+E 마 음 을
+F 난 말 야
+G 전 해 듣 지
+H 못 했 어
+I 겨 레 와
+J 민 족 또 청 년
+K 사 랑 소 망
+L 빛 흙 비
+M 먹 보 친 구
+N 트 위 터
+O 페 북 프 렌 드
+P 코 요 미
+Q 타 임 라 인
+R 장 발 컷 
+S 스 튜 디 오
+T 봇 운 영
+U 원 격 접 속
+V 노 티 제 거
+W 쓸 게 없 다
+X 중 복 안 돼
+Y 한 강 풍 덩
+Z 목 숨 아 껴
+            </textarea>
+            </div>
+        <div class="col">
+            <h2>데이터</h2>
+            <textarea id="data">덩프격 튜어북격비이 디렌흙거을 레봇 강북원발디마흙말 말겨컷디영</textarea>
+            <h2>해독</h2>
+            <p><pre id="output">아직 해석되지 않았습니다</pre></p>
+        </div>
+        <div class="col">
+            <h2>암호화</h2>
+            <textarea id="data_src">YOU SHOULD SOLVE IT YOURSELF FIRST</textarea>
+            <h2>암호화 결과</h2>
+            <p><pre id="output_src">아직 암호화되지 않았습니다</pre></p>
+        </div>
+    </div>
+</body>
+<script>
+'use strict';
+
+let key = {};
+let key_src = {};
+let secret = null;
+let data = null;
+let data_src = null;
+let output = null;
+let output_src = null;
+let warn = null;
+
+window.addEventListener('load', () => {
+    secret = document.querySelector('#secret');
+    data = document.querySelector('#data');
+    data_src = document.querySelector('#data_src');
+    output = document.querySelector('#output');
+    output_src = document.querySelector('#output_src');
+    warn = document.querySelector('#warn');
+
+    secret.addEventListener('input', secretProcess);
+    data.addEventListener('input', dataProcess);
+    data_src.addEventListener('input', encryptProcess);
+    secretProcess();
+});
+function secretProcess() {
+    key = {};
+    key_src = {};
+
+    let text = secret.value;
+    let lines = text.split(/\n|\r\n/);
+    let isCorrect = true;
+    lines.forEach((val) => {
+        val = val.trim();
+        let curLine = val.split(' ');
+        
+        for (let i = 1; i < curLine.length; i++) {
+            if (key[curLine[i]] !== undefined && key[curLine[i]] !== curLine[0]) {
+                console.error(`error: 이미 존재하는 key ${key[curLine[i]]} 에 다른 값 ${curLine[0]} 을 넣습니다. 글자는 ${curLine[i]} 입니다.`);
+                isCorrect = false;
+            }
+            key[curLine[i]] = curLine[0];
+
+            if (key_src[curLine[0]] === undefined) {
+                key_src[curLine[0]] = [];
+            }
+            key_src[curLine[0]].push(curLine[i]);
+        }        
+    });
+
+    if (isCorrect === false) {
+        warn.innerText = '암호표가 아닌 것 같습니다. 콘솔에서 자세한 정보를 확인하세요.';
+    } else {
+        warn.innerText = '암호표에 문제가 없습니다.';
+    }
+    dataProcess();
+    encryptProcess();
+}
+
+function dataProcess() {
+    let text = data.value;
+    output.innerText = '';
+    for (let i = 0; i < text.length; i++) {
+        if (text[i].match(/\s|[a-zA-Z]|[0-9]|\#|\_/)) {
+            output.innerText += text[i];
+        } else if (key[text[i]] !== undefined) {
+            output.innerText += key[text[i]];
+        } else {
+            output.innerText += '?';
+        }
+    }
+}
+
+function encryptProcess() {
+    let text = data_src.value;
+    output_src.innerText = '';
+    for (let i = 0; i < text.length; i++) {
+        if (text[i].match(/\s|[ㄱ-ㅎㅏ-ㅣ가-힣]|[0-9]|\#|\_/)) {
+            output_src.innerText += text[i];
+        } else if (key_src[text[i]] !== undefined) {
+            output_src.innerText += key_src[text[i]][( key_src[text[i]].length * Math.random() ) | 0];
+        } else {
+            output_src.innerText += '?';
+        }
+    }
+}
+
+</script>
+</html>

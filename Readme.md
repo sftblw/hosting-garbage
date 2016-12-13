@@ -11,3 +11,4 @@
 
 - [타임라인 팔로잉 체크리스트](\src\timeline_following_checklist.md) [\(렌더링\)](http://sftblw.github.io/hosting-garbage/rendered/timeline_following_checklist.md.html)
 - [몇 번 단챠를 해야 원하는 SSR 아이돌을 뽑을 수 있을까?](\rendered\dancha_for_rate.md) [\(렌더링\)](http://sftblw.github.io/hosting-garbage/rendered/dancha_for_rate.html)
+- [모 게임의 복호화기](\src\decryptor_nomemory_witch.html) [\(렌더링\)](http://sftblw.github.io/hosting-garbage/rendered/decryptor_nomemory_witch.html)
