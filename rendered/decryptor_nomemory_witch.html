@@ -5,10 +5,14 @@
     * {margin: 0; padding: 0;}
     body {width: 100%}
     div.col { max-width: 50%; padding: 2%; margin: 3%; display: inline-block; box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);}
-    div.container {text-align: center; max-width: 1024px; margin: 0 auto;}
+    div.container {text-align: center; max-width: 1800px; margin: 0 auto;}
     h1, h2, h3, h4, h5, h6 { margin-bottom: .5em; margin-top: .5em;}
     textarea {margin-top: .5em; margin-bottom: .5em;}
     button {width: 100%; padding: 2em;}
+	@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+		* {font-size:3.5vmin;}
+        div.col {max-width: 100%;}
+	}
 </style>
 </head>
 <html>
@@ -20,7 +24,7 @@
             <p>알파벳 하나 - 한글 여러글자 형식이며, 암호표에는 한 줄에 하나씩 공백으로 구분해서 넣으세요. 예제는 기본값을 참조하세요.
             <p>알파벳 소문자에 대한 고려는 안 하고 짰는데 소문자도 암호화 대상으로 사용할 수 있긴 할 겁니다.</p>
         </div>
-        <div class="col"><button>변환</button></div>
+        <div class="col"><button id="convert">변환</button></div>
         <div class="col">
         <h2>암호표</h2>
             <p id="warn"></p>
@@ -78,6 +82,7 @@ let data_src = null;
 let output = null;
 let output_src = null;
 let warn = null;
+let convert = null;
 
 window.addEventListener('load', () => {
     secret = document.querySelector('#secret');
@@ -86,6 +91,7 @@ window.addEventListener('load', () => {
     output = document.querySelector('#output');
     output_src = document.querySelector('#output_src');
     warn = document.querySelector('#warn');
+    convert = document.querySelector('#convert');
 
     secret.addEventListener('input', secretProcess);
     secret.addEventListener('keyup', secretProcess);
@@ -96,6 +102,7 @@ window.addEventListener('load', () => {
     data_src.addEventListener('input', encryptProcess);
     data_src.addEventListener('keyup', encryptProcess);
     data_src.addEventListener('paste', encryptProcess);
+    convert.addEventListener('click', encryptProcess);
     secretProcess();
 });
 function secretProcess() {
